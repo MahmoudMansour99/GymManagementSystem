@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace GymManagementDAL.Repostitories.Interfaces
 {
-    public interface ISessionRepository
+    public interface IUnitOfWorks
     {
-        IEnumerable<Session> GetAll();
-        Session? GetById(int id);
-        int Add(Session session);
-        int Update(Session session);
-        int Delete(Session session);
+        IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity, new();
+
+        int SaveChanges();
+
+
     }
 }
