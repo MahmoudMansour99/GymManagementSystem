@@ -9,16 +9,20 @@ using System.Threading.Tasks;
 
 namespace GymManagementDAL.Repostitories.Classes
 {
-    public class UnitOfWorks : IUnitOfWorks , IDisposable
+    public class UnitOfWorks : IUnitOfWorks
     {
         private readonly GymDbContext _dbContext;
 
-        public UnitOfWorks(GymDbContext dbContext)
+        public UnitOfWorks(GymDbContext dbContext, ISessionRepository sessionRepository)
         {
             _dbContext = dbContext;
+            SessionRepository = sessionRepository;
         }
 
         private readonly Dictionary<Type, object> _repositories = new();
+
+        public ISessionRepository SessionRepository { get; }
+
         public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity, new()
         {
             //return new GenericRepository<TEntity>(_dbContext);
@@ -34,11 +38,6 @@ namespace GymManagementDAL.Repostitories.Classes
         public int SaveChanges()
         {
             return _dbContext.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            _dbContext.Dispose();
         }
     }
 }
