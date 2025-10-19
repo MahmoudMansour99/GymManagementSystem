@@ -1,54 +1,32 @@
-﻿using GymManagementBLL.Services.Interfaces;
-using GymManagementDAL.Entities;
+using System.Diagnostics;
+using GymManagementPL.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymManagementPL.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IAnalyticService _analyticService;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IAnalyticService analyticService)
+        public HomeController(ILogger<HomeController> logger)
         {
-            _analyticService = analyticService;
-        }
-
-        public ActionResult Index()
-        {
-            var Data = _analyticService.GetAnalyticViewModel();
-            return View(Data);
+            _logger = logger;
         }
 
-        #region Action Return Types
-        public ActionResult Trainers()
+        public IActionResult Index()
         {
-            var Trainers = new List<Trainer>()
-            {
-                new Trainer() { Name = "Ahmed", Phone = "0111122254"},
-                new Trainer() { Name = "Aya", Phone = "01254866"},
-            };
-            return Json(Trainers);
-        }
-        public ActionResult Redirect()
-        {
-            return Redirect("https://www.netflix.com/eg-en");
-        }
-        public ActionResult Content()
-        {
-            return Content("<h1>Welcome to Gym Management System</h1>", "text/html");
+            return View();
         }
 
-        public ActionResult DownloadFile()
+        public IActionResult Privacy()
         {
-            var FilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "css", "site.css");
-            var FileBytes = System.IO.File.ReadAllBytes(FilePath);
-            return File(FileBytes, "text/css", "DownloadSite.css");
+            return View();
         }
 
-        public ActionResult EmptyAction()
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
         {
-            return new EmptyResult();
-        } 
-        #endregion
-    } 
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
 }
