@@ -1,4 +1,4 @@
-﻿using GymManagementBLL.ViewModels.MemberViewModel;
+﻿using GymManagementBLL.ViewModels.MemberViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

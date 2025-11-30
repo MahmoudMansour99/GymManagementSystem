@@ -1,4 +1,5 @@
-﻿using GymManagementBLL.Services.Interfaces;
+﻿using AutoMapper;
+using GymManagementBLL.Services.Interfaces;
 using GymManagementBLL.ViewModels.PlanViewModels;
 using GymManagementDAL.Entities;
 using GymManagementDAL.Repostitories.Interfaces;
@@ -14,10 +15,12 @@ namespace GymManagementBLL.Services.Classes
     public class PlanService : IPlanService
     {
         private readonly IUnitOfWorks _unitOfWorks;
+        private readonly IMapper _mapper;
 
-        public PlanService(IUnitOfWorks unitOfWorks)
+        public PlanService(IUnitOfWorks unitOfWorks, IMapper mapper)
         {
             _unitOfWorks = unitOfWorks;
+            _mapper = mapper;
         }
 
         public IEnumerable<PlanViewModel> GetAllPlans()
@@ -25,15 +28,7 @@ namespace GymManagementBLL.Services.Classes
             var Plans = _unitOfWorks.GetRepository<Plan>().GetAll();
             if (Plans == null || !Plans.Any()) return [];
 
-            return Plans.Select(X => new PlanViewModel
-            {
-                Id = X.Id,
-                Name = X.Name,
-                Description = X.Description,
-                DurationDays = X.DurationDays,
-                Price = X.Price,
-                IsActive = X.IsActive
-            });
+            return _mapper.Map<IEnumerable<Plan>, IEnumerable<PlanViewModel>>(Plans);
         }
 
         public PlanViewModel GetPlanDetails(int PlanId)
@@ -41,15 +36,7 @@ namespace GymManagementBLL.Services.Classes
             var Plan = _unitOfWorks.GetRepository<Plan>().GetById(PlanId);
             if (Plan == null) return null;
 
-            return new PlanViewModel()
-            {
-                Id = PlanId,
-                Name = Plan.Name,
-                Description = Plan.Description,
-                DurationDays = Plan.DurationDays,
-                Price = Plan.Price,
-                IsActive = Plan.IsActive
-            };
+            return _mapper.Map<PlanViewModel>(Plan);
         }
 
         public UpdatePlanViewModel? GetPlanToUpdate(int PlanId)
@@ -58,13 +45,7 @@ namespace GymManagementBLL.Services.Classes
 
             if (Plan is null || Plan.IsActive == false || HasActiveMemberShips(PlanId)) return null;
 
-            return new UpdatePlanViewModel()
-            {
-                Description = Plan.Description,
-                DurationDays = Plan.DurationDays,
-                PlanName = Plan.Name,
-                Price = Plan.Price
-            };
+            return _mapper.Map<UpdatePlanViewModel>(Plan);
         }
 
         public bool UpdatePlan(int PlanId, UpdatePlanViewModel updatedPlan)
