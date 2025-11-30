@@ -10,30 +10,34 @@ namespace GymManagementBLL.ViewModels.TrainerViewModels
 {
     public class UpdateTrainerViewModel
     {
-        [Required(ErrorMessage = "Email Is Required")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage = "Invalid Email Format")]
-        [StringLength(100, MinimumLength = 5, ErrorMessage = "Email Must be Between 5 And 100 Characters")]
-        public string? Email { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
-        [Required(ErrorMessage = "Phone Is Required")]
-        [Phone(ErrorMessage = "Invalid Phone Format")]
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "Phone Number Must Be Valid Egyptian Phone Number")]
+        [Required(ErrorMessage = "Email Is Required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
+
+        public string Email { get; set; } = null!;
+
+        [Required(ErrorMessage = "Phone Number Is Required")]
+        [Phone(ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "Phone number must be a valid Egyptian mobile number")]
+
         public string Phone { get; set; } = null!;
 
         [Required(ErrorMessage = "Building Number Is Required")]
-        [Range(1, 1000, ErrorMessage = "Building Number Must be Between 1 And 1000")]
+        [Range(1, int.MaxValue, ErrorMessage = "Building Number must be greater than 0")]
         public int BuildingNumber { get; set; }
 
+        [Required(ErrorMessage = "City Is Required")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "City must be between 2 and 100 characters")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "City can only contain letters and spaces")]
+        public string City { get; set; } = null!;
+
         [Required(ErrorMessage = "Street Is Required")]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "Street Must be Between 2 And 30 Characters")]
+        [StringLength(150, MinimumLength = 2, ErrorMessage = "Street must be between 2 and 150 characters")]
+        [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Street can only contain letters, numbers, and spaces")]
         public string Street { get; set; } = null!;
 
-        [Required(ErrorMessage = "City Is Required")]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "City Must be Between 2 And 30 Characters")]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "City can Contain only Letters and Spaces")]
-        public string City { get; set; } = null!;
-        public Specialties Specialization { get; set; }
+        [Required(ErrorMessage = "Specialty is Required")]
+        public Specialties Specialties { get; set; }
     }
 }
