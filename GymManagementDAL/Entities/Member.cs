@@ -9,7 +9,7 @@ namespace GymManagementDAL.Entities
     public class Member : GymUser
     {
         // JoinDate == CreateAt (By Fluent API)
-        public string? Photo { get; set; }
+        public string Photo { get; set; } = null!;
 
         #region RelationShip
         #region Member - HealthRecord
