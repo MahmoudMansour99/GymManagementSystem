@@ -41,8 +41,9 @@ namespace GymManagementBLL.Services.Classes
 
         public UpdatePlanViewModel? GetPlanToUpdate(int PlanId)
         {
+            Console.WriteLine($"Requested ID = {PlanId}");
             var Plan = _unitOfWorks.GetRepository<Plan>().GetById(PlanId);
-
+            Console.WriteLine($"Found Plan: {Plan?.Name ?? "NULL"}");
             if (Plan is null || Plan.IsActive == false || HasActiveMemberShips(PlanId)) return null;
 
             return _mapper.Map<UpdatePlanViewModel>(Plan);
