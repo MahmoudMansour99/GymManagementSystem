@@ -1,9 +1,12 @@
 ﻿using GymManagementBLL.Services.Interfaces;
 using GymManagementBLL.ViewModels.MemberViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GymManagementPL.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;
@@ -84,7 +87,7 @@ namespace GymManagementPL.Controllers
             }
             else
             {
-                TempData["SuccessMessage"] = "Member failed to be Created, checkphone and mail";
+                TempData["ErrorMessage"] = "Member failed to be Created, check phone, email, or photo validation";
             }
 
             return RedirectToAction(nameof(Index));
