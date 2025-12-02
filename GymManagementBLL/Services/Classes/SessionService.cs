@@ -73,8 +73,9 @@ namespace GymManagementBLL.Services.Classes
 
                 return _unitOfWorks.SaveChanges() > 0;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -119,6 +120,20 @@ namespace GymManagementBLL.Services.Classes
             {
                 return false;
             }
+        }
+
+        public IEnumerable<TrainerSelectViewModel> GetAllTrainersForDropDown()
+        {
+            var Trainers = _unitOfWorks.GetRepository<Trainer>().GetAll();
+
+            return _mapper.Map<IEnumerable<Trainer>, IEnumerable<TrainerSelectViewModel>>(Trainers);
+        }
+
+        public IEnumerable<CategorySelectViewModel> GetAllCategoryForDropDown()
+        {
+            var Categories = _unitOfWorks.GetRepository<Category>().GetAll();
+
+            return _mapper.Map<IEnumerable<Category>, IEnumerable<CategorySelectViewModel>>(Categories);
         }
 
         #region Helpers
