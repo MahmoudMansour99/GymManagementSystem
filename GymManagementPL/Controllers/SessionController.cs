@@ -142,7 +142,7 @@ namespace GymManagementPL.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "Session failed to Delete";
+                TempData["ErrorMessage"] = "Session failed to Delete due to it is onGoing or not found";
             }
             return RedirectToAction(nameof(Index));
         }

@@ -19,20 +19,13 @@ namespace GymManagementPL
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            #region ConfigurationService
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<GymDbContext>(options =>
             {
-                //options.UseSqlServer("Server = .;Database = GymManagementDB; Trusted_Connection = True; TrustServerCertificate = True;");
-                //options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
-                //options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings:DefaultConnection"));
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-
-            //builder.Services.AddScoped<GenericRepository<Member>, GenericRepository<Member>>();
-            //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(IGenericRepository<>));
-            //builder.Services.AddScoped<IPlanRepository, PlanRepository>();
-
             builder.Services.AddScoped<IUnitOfWorks, UnitOfWorks>();
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
             builder.Services.AddAutoMapper(X => X.AddProfile(new MappingProfile()));
@@ -51,12 +44,10 @@ namespace GymManagementPL
                 opt.LoginPath = "/Account/Login";
                 opt.AccessDeniedPath = "/Account/AccessDenied";
             });
-
             builder.Services.AddIdentityCore<ApplicationUser>().AddEntityFrameworkStores<GymDbContext>();
             builder.Services.AddScoped<IAccountService, AccountService>();
-
+            #endregion
             var app = builder.Build();
-
             #region Seed Data - Migrate Database
             var scoped = app.Services.CreateScope();
             var dbContext = scoped.ServiceProvider.GetRequiredService<GymDbContext>();
@@ -70,6 +61,7 @@ namespace GymManagementPL
             IdentityDbContextSeeding.SeedData(roleManager, userManager);
             #endregion
 
+            #region Configure Kestral Middlewares
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -87,6 +79,7 @@ namespace GymManagementPL
                 name: "default",
                 pattern: "{controller=Account}/{action=Login}/{id:int?}")
                 .WithStaticAssets();
+            #endregion
 
             app.Run();
         }
