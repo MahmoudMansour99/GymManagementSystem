@@ -163,7 +163,7 @@ namespace GymManagementBLL.Services.Classes
         private bool IsSessionAvailableForDeleting(Session session)
         {
             if (session == null) return false;
-            if (session.StartDate > DateTime.Now) return false;
+            if (session.StartDate > DateTime.Now && session.EndDate < DateTime.Now) return false;
             if (session.StartDate <= DateTime.Now && session.EndDate > DateTime.Now) return false;
             var HasActiveBookings = _unitOfWorks.SessionRepository.GetCountOfBookedSlots(session.Id) > 0;
             if (HasActiveBookings) return false;
