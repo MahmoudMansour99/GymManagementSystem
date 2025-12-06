@@ -83,10 +83,10 @@ ________________________________________________________________________________
 ## 📸 Screenshots
 
 ### 🔑 Login Page
-![Login](Gym%20System%20Design/login.png)
+![Login](Gym%20System%20Design/Login%20Page/Login%20Page.png)
 
 ### 🏠 Dashboard (Home Page)
-![Dashboard](Gym%20System%20Design/Login%20Page/Login%20Page.png)
+![Dashboard](Gym%20System%20Design/Home%20Page/Home%20Page%2001.png)
 
 ### 👥 Members Page
 ![Members List](Gym%20System%20Design/Member%20Page/Member%20Page%2001.png)
