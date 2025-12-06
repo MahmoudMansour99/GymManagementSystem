@@ -107,8 +107,8 @@ ________________________________________________________________________________
 
 ### 📦 Plans Page
 ![Plans List](Gym%20System%20Design/Plan%20Page/Plan%20Page%2001.png)
-![View Plan](Gym%20System%20Design/Plan520Page/Plan%20Page%2003%20-%20Edit%20Plan%20Section.png)
-![Activate/Deactivate Plan](Gym%System%20Design/Plan%20Page/Plan%20Page%2004%20-%20Edit%20Status%20Plan%20Section.png)
+![View Plan](Gym%20System%20Design/Plan%20Page/Plan%20Page%2002%20-%20View%20Plan%20Section.png)
+![Activate/Deactivate Plan](Gym%20System%20Design/Plan%20Page/Plan%20Page%2004%20-%20Edit%20Status%20Plan%20Section.png)
 
 ### 🔓 Logout Button
 ![Logout](Gym%20System%20Design/Home%20Page/Home%20Page%2001.png)
